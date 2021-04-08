@@ -1,11 +1,11 @@
-const Movie = require('../models/movie')
+const Series = require('../models/series')
 
-class MovieController {
+class SeriesController {
 
     static async find(req, res, next) {
         try {
-            const movies = await Movie.find()
-            res.status(200).json(movies)
+            const series = await Series.find()
+            res.status(200).json(series)
         } catch(err) {
             console.log(err);
         }
@@ -14,8 +14,8 @@ class MovieController {
     static async create(req, res, next) {
         try {
             const { title, overview, poster_path, popularity, tags } = req.body;
-            const newMovie = await Movie.create({ title, overview, poster_path, popularity, tags })
-            res.status(201).json(newMovie)
+            const newSeries = await Series.create({ title, overview, poster_path, popularity, tags })
+            res.status(201).json(newSeries)
         } catch(err) {
             console.log(err);
         }
@@ -25,8 +25,8 @@ class MovieController {
         try {
             const { title, overview, poster_path, popularity, tags } = req.body;
             const id = req.params.id
-            const updatedMovie = await Movie.update(id, { title, overview, poster_path, popularity, tags })
-            res.status(200).json(updatedMovie, {message: "Update Success"})
+            const updatedSeries = await Series.update(id, { title, overview, poster_path, popularity, tags })
+            res.status(200).json(updatedSeries, {message: "Update Success"})
         } catch(err) {
             console.log(err);
         }
@@ -35,12 +35,12 @@ class MovieController {
     static async delete(req, res, next) {
         try {
             const id = req.params.id
-            const deletedMovie = await Movie.deleteMovie(id)
-            res.status(200).json(deletedMovie, {message: "Delete Success"})
+            const deletedSeries = await Series.deleteSeries(id)
+            res.status(200).json(deletedSeries, {message: "Delete Success"})
         } catch(err) {
             console.log(err);
         }
     }
 }
 
-module.exports = MovieController
+module.exports = SeriesController

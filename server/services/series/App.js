@@ -1,16 +1,16 @@
 const express = require('express')
-const { run } = require('./config/mongodb')
+const { connect } = require('./config/mongodb')
 const app = express()
-const port = 4001
-const movieRouter = require('./routes/movie')
+const port = 4002
+const seriesRouter = require('./routes/series')
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
-run().then(async (database) => {
+connect().then(async (database) => {
     console.log('Mongo udah connect');
     
-    app.use('/movies', movieRouter)
+    app.use('/series', seriesRouter)
 
     app.listen(port, () => {
       console.log(`Example app listening at http://localhost:${port}`)
