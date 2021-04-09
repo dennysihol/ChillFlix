@@ -11,6 +11,16 @@ class SeriesController {
         }
     }
 
+    static async findOne(req, res, next) {
+        try {
+            const id = req.params.id
+            const series = await Series.findOne(id)
+            res.status(200).json(series)
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     static async create(req, res, next) {
         try {
             const { title, overview, poster_path, popularity, tags } = req.body;

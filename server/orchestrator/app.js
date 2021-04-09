@@ -4,7 +4,7 @@ const redis = require("./redis")
 
 const typeDefs = gql`
   type Movie {
-    _id: ID
+    _id: String
     title: String
     overview: String
     poster_path: String
@@ -13,7 +13,7 @@ const typeDefs = gql`
   }
 
   type Series {
-    _id: ID
+    _id: String
     title: String
     overview: String
     poster_path: String
@@ -24,7 +24,9 @@ const typeDefs = gql`
 
   type Query {
     movies: [Movie]
+    movie(_id: String): Movie
     series: [Series]
+    seriesOne(_id: String): Series
   }
 `
 
@@ -47,6 +49,18 @@ const resolvers = {
           console.log(err)
         }
       },
+      movie: async (_, args) => {
+        try {
+            const { _id } = args
+            const { data } = await axios({
+                method: 'get',
+                url: `http://localhost:4001/movies/${_id}`
+            })
+            return data
+        } catch (err) {
+            console.log(err)
+        }
+      },
       series: async () => {
           try{
             const cache = await redis.get('tv-series')
@@ -63,6 +77,18 @@ const resolvers = {
           } catch (err) {
             console.log(err);
           }
+      },
+      seriesOne: async (_, args) => {
+        try {
+            const { _id } = args
+            const { data } = await axios({
+                method: 'get',
+                url: `http://localhost:4002/series/${_id}`
+            })
+            return data
+        } catch (err) {
+            console.log(err)
+        }
       }
     }
 }
