@@ -37,8 +37,8 @@ const typeDefs = gql`
   }
   extend type Mutation {
     addMovie(movie: newMovie): Movie
-    removeMovie(id: String): removeMessage
-    editMovie(id: String, movie: editMovie): editMessage
+    removeMovie(_id: String): removeMessage
+    editMovie(_id: String, movie: editMovie): editMessage
   }
 `;
 
@@ -76,44 +76,39 @@ const resolvers = {
   },
   Mutation: {
     addMovie: async (parent, args, context, info) => {
-        await redis.del("movies")
-        const { title, overview, popularity, poster_path, tags } = args.movie;
+        const addNewMovie = {
+            title: args.movie.title,
+            overview: args.movie.overview,
+            popularity: args.movie.popularity,
+            poster_path: args.movie.poster_path,
+            tags: args.movie.tags,
+        }
         try {
             const { data } = await axios({
-            url: "http://localhost:4001/movies",
-            method: "post",
-            data: {
-                title,
-                overview,
-                popularity,
-                poster_path,
-                tags,
-            },
+                url: "http://localhost:4001/movies",
+                method: "post",
+                data: addNewMovie
             });
-            const { oldData } = await axios.get("http://localhost:4001/movies");
-            await redis.set("movies", JSON.stringify(oldData));
-            return data[0];
+            await redis.del("movies")
+            return data;
         } catch (error) {
             console.log(error);
         }
     },
     removeMovie: async (parent, args, context, info) => {
-        await redis.del("movies")
         const { _id } = args
         try {
             const { data } = await axios({
             url: `http://localhost:4001/movies/${_id}`,
             method: "delete",
             });
-            const { oldData } = await axios.get("http://localhost:4001/movies");
-            await redis.set("movies", JSON.stringify(oldData));
+            await redis.del("movies")
             return data;
         } catch (error) {
             console.log(error);
         }
     },
     editMovie: async (parent, args, context, info) => {
-        await redis.del("movies")
         const { _id } = args
         const { title, overview, popularity, poster_path, tags } = args.movie;
         try {
@@ -128,8 +123,7 @@ const resolvers = {
                 tags,
             },
             });
-            const { oldData } = await axios.get("http://localhost:4001/movies");
-            await redis.set("movies", JSON.stringify(oldData));
+            await redis.del("movies")
             return data;
         } catch (error) {
             console.log(error);

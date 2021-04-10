@@ -71,7 +71,6 @@ const resolvers = {
                 method: 'get',
                 url: `http://localhost:4002/series/${_id}`
             })
-            await redis.set("tv-series", JSON.stringify(data));
             return data
         } catch (err) {
             console.log(err)
@@ -99,23 +98,22 @@ const resolvers = {
             console.log(error);
         }
     },
-    removeSeries: async (parent, args, context, info) => {
-        await redis.del("tv-series")
-        const _id = args.id;
+    removeSeries: async (parent, args, context, info) => {        
+        const { _id } = args
         try {
             const { data } = await axios({
             url: `http://localhost:4002/series/${_id}`,
             method: "delete",
             });
+            await redis.del("tv-series")
             return data;
         } catch (error) {
             console.log(error);
         }
     },
-    editSeries: async (parent, args, context, info) => {
-        await redis.del("tv-series")
+    editSeries: async (parent, args, context, info) => {        
         const { title, overview, popularity, poster_path, tags } = args.series;
-        const _id = args.id;
+        const { _id } = args
         try {
             const { data } = await axios({
             url: `http://localhost:4002/series/${_id}`,
@@ -128,6 +126,7 @@ const resolvers = {
                 tags,
             },
             });
+            await redis.del("tv-series")
             return data;
         } catch (error) {
             console.log(error);
