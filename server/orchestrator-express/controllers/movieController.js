@@ -22,7 +22,6 @@ class MovieController {
   static async addMovie(req, res) {    
     const { title, overview, poster_path, popularity, tags } = req.body;
     try {
-      await redis.del('movies')
       const addMovie = await axios({
         method: "post",
         url: "http://localhost:4001/movies",
@@ -35,8 +34,8 @@ class MovieController {
         },
       });
       const { data } = await axios.get("http://localhost:4001/movies");
-      await redis.set("movies", JSON.stringify(data));
       res.json(data);
+      await redis.del('movies')
     } catch (error) {
       console.log(error);
     }
