@@ -12,8 +12,8 @@ const typeDefs = gql`
     tags: [String]
   }
   extend type Query {
-    movies: [Movie]
-    movie(_id: String): Movie
+    getMovies: [Movie]
+    getMovie(_id: String): Movie
   }
   input newMovie {
     title: String!
@@ -44,7 +44,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    movies: async () => {
+    getMovies: async () => {
       try {
         const cache = await redis.get("movies");
         if (cache) {
@@ -61,7 +61,7 @@ const resolvers = {
         console.log(error);
       }
     },
-    movie: async (_, args) => {
+    getMovie: async (_, args) => {
         try {
             const { _id } = args
             const { data } = await axios({
