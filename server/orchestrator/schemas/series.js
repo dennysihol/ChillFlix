@@ -37,8 +37,8 @@ const typeDefs = gql`
   }
   extend type Mutation {
     addSeries(series: newSeries): Series
-    removeSeries(id: String): removedMessage
-    editSeries(id: String, series: editSeries): editedMessage
+    removeSeries(_id: String): removedMessage
+    editSeries(_id: String, series: editSeries): editedMessage
   }
 `;
 
@@ -78,7 +78,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    addSeries: async (parent, args, context, info) => {
+    addSeries: async (_, args, context, info) => {
         const addNewSeries = {
             title: args.series.title,
             overview: args.series.overview,
@@ -98,7 +98,7 @@ const resolvers = {
             console.log(error);
         }
     },
-    removeSeries: async (parent, args, context, info) => {        
+    removeSeries: async (_, args, context, info) => {        
         const { _id } = args
         try {
             const { data } = await axios({
@@ -111,7 +111,7 @@ const resolvers = {
             console.log(error);
         }
     },
-    editSeries: async (parent, args, context, info) => {        
+    editSeries: async (_, args, context, info) => {        
         const { title, overview, popularity, poster_path, tags } = args.series;
         const { _id } = args
         try {

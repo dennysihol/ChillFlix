@@ -45,7 +45,7 @@ export default function NavbarTop() {
             Favorites
           </Nav.Link>
           <Nav.Link onClick={() => addPage()} style={{ fontWeight: "bold", color: "white" }}>
-            Add Movie
+            Add
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

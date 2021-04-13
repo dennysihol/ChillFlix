@@ -75,7 +75,7 @@ const resolvers = {
     }
   },
   Mutation: {
-    addMovie: async (parent, args, context, info) => {
+    addMovie: async (_, args, context, info) => {
         const addNewMovie = {
             title: args.movie.title,
             overview: args.movie.overview,
@@ -95,7 +95,7 @@ const resolvers = {
             console.log(error);
         }
     },
-    removeMovie: async (parent, args, context, info) => {
+    removeMovie: async (_, args, context, info) => {
         const { _id } = args
         try {
             const { data } = await axios({
@@ -108,7 +108,7 @@ const resolvers = {
             console.log(error);
         }
     },
-    editMovie: async (parent, args, context, info) => {
+    editMovie: async (_, args, context, info) => {
         const { _id } = args
         const { title, overview, popularity, poster_path, tags } = args.movie;
         try {

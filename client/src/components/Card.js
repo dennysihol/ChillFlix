@@ -8,15 +8,15 @@ import "../flip-card.css";
 
 const REMOVE_MOVIE = gql`
   mutation RemoveMovie($id: String) {
-    removeMovie(id: $id) {
+    removeMovie(_id: $id) {
       msg
     }
   }
 `;
 
 const REMOVE_SERIES = gql`
-  mutation RemoveSerie($id: String) {
-    removeSeries(id: $id) {
+  mutation RemoveSeries($id: String) {
+    removeSeries(_id: $id) {
       msg
     }
   }
@@ -30,10 +30,30 @@ export default function ListCard(props) {
   const [removeSeries] = useMutation(REMOVE_SERIES);
 
   function remove(id) {
-    Swal.fire({
-      icon: "success",
-      title: "Success Remove Series",
-    });
+    console.log(id);
+    if (type === "Movie") {
+      removeMovie({
+        variables: {
+          id,
+        },
+        refetchQueries: ["GetMovies"],
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Success Remove Movie",
+      });
+    } else if (type === "Series") {
+      removeSeries({
+        variables: {
+          id,
+        },
+        refetchQueries: ["GetSeries"],
+      });
+      Swal.fire({
+        icon: "success",
+        title: "Success Remove Series",
+      });
+    }
   }
 
   function editPage(id) {
@@ -49,6 +69,13 @@ export default function ListCard(props) {
   }
 
   function addFav(favData) {
+    const { favFilms } = client.readQuery({ query: GET_FAV_FILM });
+    client.writeQuery({
+      query: GET_FAV_FILM,
+      data: {
+        favFilms: [...favFilms, favData],
+      },
+    });
     Swal.fire({
       icon: "success",
       title: "Success Add To Favourite",
@@ -82,20 +109,16 @@ export default function ListCard(props) {
                   }}
                 >
                   <div>
-                    <h6>Title:</h6>
-                    <h6>{title}</h6>
+                    <h5>{title}</h5>
                   </div>
                   <div>
-                    <h6>Overview:</h6>
-                    <h6>{overview}</h6>
+                    <h6>"{overview}"</h6>
                   </div>
                   <div>
-                    <h6>Tags:</h6>
-                    <h6>{tags.join(", ")}</h6>
+                    <h6>Tags: {tags.join(", ")}</h6>
                   </div>
                   <div>
-                    <h6>Rating:</h6>
-                    <h6>{popularity}/10</h6>
+                    <h6>{popularity}%/100%</h6>
                   </div>
                   {action && (
                     <div className="d-flex justify-content-around">

@@ -4,7 +4,7 @@ import { Spinner } from "react-bootstrap";
 import ListCard from "../components/Card";
 
 const GET_MOVIES = gql`
-    query get{
+    query GetMovies{
         getMovies {
             _id
             title
@@ -33,13 +33,13 @@ export default function Movies() {
     );
   if (error) return <h1>ERROR</h1>;
   return (
-    <>
-      <h1 className="text-center mt-4">Movies List</h1>
+    <div style={{paddingBottom: "20px", height: "100vh", overflow: "auto"}}>
+      <h1 className="text-center mt-4" style={{color: "white"}}>Movies List</h1>
       <div className="d-flex flex-wrap container">
         {data.getMovies.map((movie) => (
           <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
         ))}
       </div>
-    </>
+    </div>
   );
 }
