@@ -8,11 +8,15 @@ export default function NavbarTop() {
   function homePage() {
     history.push("/");
   }
-
+  
   function addPage() {
     history.push("/add");
   }
 
+  function moviesPage() {
+    history.push("/movies");
+  }
+  
   function seriesPage() {
     history.push("/series");
   }
@@ -23,7 +27,7 @@ export default function NavbarTop() {
 
   return (
     <Navbar bg="dark" expand="lg">
-      <Navbar.Brand style={{ fontWeight: "bold", fontStyle: "italic", color: "white" }}>
+      <Navbar.Brand onClick={() => homePage()} style={{ fontWeight: "bold", fontStyle: "italic", color: "white", cursor: "pointer" }}>
         ChillFlix
       </Navbar.Brand>
       <Navbar.Collapse>
@@ -31,7 +35,7 @@ export default function NavbarTop() {
           |
         </Nav>
         <Nav>
-          <Nav.Link onClick={() => homePage()} style={{ fontWeight: "bold", color: "white" }}>
+          <Nav.Link onClick={() => moviesPage()} style={{ fontWeight: "bold", color: "white" }}>
             Movies
           </Nav.Link>
           <Nav.Link onClick={() => seriesPage()} style={{ fontWeight: "bold", color: "white" }}>

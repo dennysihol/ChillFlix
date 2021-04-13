@@ -12,7 +12,7 @@ const typeDefs = gql`
     tags: [String]
   }
   extend type Query {
-    series: [Series]
+    getSeries: [Series]
     seriesOne(_id: ID): Series
   }
   input newSeries {
@@ -44,7 +44,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    series: async () => {
+    getSeries: async () => {
       try {
         const cache = await redis.get("tv-series");
 

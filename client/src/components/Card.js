@@ -14,7 +14,7 @@ const REMOVE_MOVIE = gql`
   }
 `;
 
-const REMOVE_SERIE = gql`
+const REMOVE_SERIES = gql`
   mutation RemoveSerie($id: String) {
     removeSeries(id: $id) {
       msg
@@ -27,36 +27,17 @@ export default function ListCard(props) {
   const { type, action } = props;
   const history = useHistory();
   const [removeMovie] = useMutation(REMOVE_MOVIE);
-  const [removeSeries] = useMutation(REMOVE_SERIE);
+  const [removeSeries] = useMutation(REMOVE_SERIES);
 
   function remove(id) {
-    if (type === "Movie") {
-      removeMovie({
-        variables: {
-          id,
-        },
-        refetchQueries: ["GetMovies"],
-      });
-      Swal.fire({
-        icon: "success",
-        title: "Success Remove Movie",
-      });
-    } else if (type === "Series") {
-      removeSeries({
-        variables: {
-          id,
-        },
-        refetchQueries: ["GetSeries"],
-      });
-      Swal.fire({
-        icon: "success",
-        title: "Success Remove Series",
-      });
-    }
+    Swal.fire({
+      icon: "success",
+      title: "Success Remove Series",
+    });
   }
 
   function editPage(id) {
-    history.push(`/edit-form/${id}`, {
+    history.push(`/edit/${id}`, {
       id,
       title,
       overview,
@@ -68,13 +49,6 @@ export default function ListCard(props) {
   }
 
   function addFav(favData) {
-    const { favFilms } = client.readQuery({ query: GET_FAV_FILM });
-    client.writeQuery({
-      query: GET_FAV_FILM,
-      data: {
-        favFilms: [...favFilms, favData],
-      },
-    });
     Swal.fire({
       icon: "success",
       title: "Success Add To Favourite",
@@ -91,32 +65,37 @@ export default function ListCard(props) {
                 <Card.Img
                   variant="top"
                   src={poster_path}
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "100%", height: "100%", borderRadius: "10px", backgroundColor: "#14213d"}}
                 />
               </div>
               <div className="back-card">
                 <div
                   style={{
-                    backgroundColor: "teal",
+                    backgroundColor: "#14213d",
                     textAlign: "center",
                     width: "100%",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-around",
+                    borderRadius: "10px"
                   }}
                 >
                   <div>
-                    <h5>{title}</h5>
+                    <h6>Title:</h6>
+                    <h6>{title}</h6>
                   </div>
                   <div>
+                    <h6>Overview:</h6>
                     <h6>{overview}</h6>
                   </div>
                   <div>
-                    <p>{tags.join(", ")}</p>
+                    <h6>Tags:</h6>
+                    <h6>{tags.join(", ")}</h6>
                   </div>
                   <div>
-                    <h4>{popularity}/10</h4>
+                    <h6>Rating:</h6>
+                    <h6>{popularity}/10</h6>
                   </div>
                   {action && (
                     <div className="d-flex justify-content-around">
