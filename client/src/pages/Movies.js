@@ -33,16 +33,12 @@ export default function Movies() {
     );
   if (error) return <h1>ERROR</h1>;
   return (
-    <div style={{paddingBottom: "20px", height: "100vh", overflow: "auto"}}>
+    <div className="container" style={{paddingBottom: "20px", height: "100%", minHeight: "calc(100vh - 98px)"}}>
       <h1 className="text-center mt-4" style={{color: "white"}}>Movies List</h1>
-      <div className="d-flex flex-wrap container">
-        <div className="row">
-          {data.getMovies.map((movie) => (
-            <div className="col-4">
-              <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
-            </div>
-          ))}
-        </div>
+      <div className="d-flex flex-wrap container" style={{alignContent: "space-evenly", justifyContent: "space-evenly", paddingLeft: "0"}}>
+        {data.getMovies.map((movie) => (
+          <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
+        ))}
       </div>
     </div>
   );

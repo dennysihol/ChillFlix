@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Image } from "react-bootstrap";
 
 export default function NavbarTop() {
   const history = useHistory();
@@ -27,12 +27,11 @@ export default function NavbarTop() {
 
   return (
     <Navbar bg="dark" expand="lg">
-      <Navbar.Brand onClick={() => homePage()} style={{ fontWeight: "bold", fontStyle: "italic", color: "white", cursor: "pointer" }}>
-        ChillFlix
+      <Navbar.Brand onClick={() => homePage()} style={{ fontWeight: "bold", fontSize: "30px", color: "#d00000", cursor: "pointer" }}>
+        <Image src="https://i.imgur.com/Y6vbnmI.png" style={{height: "40px"}}/>
       </Navbar.Brand>
       <Navbar.Collapse>
         <Nav className="mr-auto" style={{color: "white"}}>
-          |
         </Nav>
         <Nav>
           <Nav.Link onClick={() => moviesPage()} style={{ fontWeight: "bold", color: "white" }}>

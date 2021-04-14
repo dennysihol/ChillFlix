@@ -61,7 +61,6 @@ class SeriesController {
     static async delete(req, res, next) {
         try {
             const id = req.params.id
-            console.log(id);
             const deletedSeries = await Series.deleteSeries(id)
             res.status(200).json({message: "Delete Success"})
             await redis.del('tv-series')

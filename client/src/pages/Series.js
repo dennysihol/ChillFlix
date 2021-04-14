@@ -33,16 +33,12 @@ export default function Series() {
     );
   if (error) return <h1>ERROR</h1>;
   return (
-    <div style={{paddingBottom: "20px", height: "100vh", overflow: "auto"}}> 
+    <div style={{paddingBottom: "20px", height: "100%", minHeight: "calc(100vh - 97px)"}}> 
       <h1 className="text-center mt-4" style={{color: "white"}}>Series List</h1>
-      <div className="d-flex flex-wrap container">
-        <div className="row">
-          {data.getSeries.map((series) => (
-            <div className="col-4">
-              <ListCard key={series._id} film={series} type={"Series"} action={true} />
-            </div>
-          ))}
-        </div>
+      <div className="d-flex flex-wrap container" style={{alignContent: "space-evenly", justifyContent: "space-evenly", paddingLeft: "0"}}>
+        {data.getSeries.map((series) => (
+            <ListCard key={series._id} film={series} type={"Series"} action={true} />
+        ))}
       </div>
     </div>
   );

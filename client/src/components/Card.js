@@ -3,6 +3,7 @@ import { Card, Button, Row, Col, Image } from "react-bootstrap";
 import { gql, useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import client, { GET_FAV_FILM } from "../config/graphql";
+import { GET_ALL } from "../pages/Home"
 import Swal from "sweetalert2";
 import "../flip-card.css";
 
@@ -36,7 +37,9 @@ export default function ListCard(props) {
         variables: {
           id,
         },
-        refetchQueries: ["GetAll"],
+        refetchQueries: [
+          { query: GET_ALL }
+        ],
       });
       Swal.fire({
         icon: "success",
@@ -47,7 +50,9 @@ export default function ListCard(props) {
         variables: {
           id,
         },
-        refetchQueries: ["GetAll"],
+        refetchQueries: [
+          { query: GET_ALL }
+        ],
       });
       Swal.fire({
         icon: "success",
@@ -122,14 +127,15 @@ export default function ListCard(props) {
                   </div>
                   {action && (
                     <div className="d-flex justify-content-around">
-                      <Button className="mr-1" onClick={() => editPage(_id)}>
-                        Edit
-                      </Button>
-                      <Button className="mr-1" onClick={() => remove(_id)}>
-                        Delete
-                      </Button>
-                      <Button
-                        className="mr-1"
+                      <Image 
+                        src="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Compose-512.png" 
+                        style={{height: "40px"}}
+                        onClick={() => editPage(_id)}
+                        alt="Edit"
+                      />
+                      <Image
+                        src="https://i.imgur.com/hUWMQ5Q.png"
+                        style={{height: "40px"}}
                         onClick={() =>
                           addFav({
                             _id,
@@ -140,9 +146,14 @@ export default function ListCard(props) {
                             tags,
                           })
                         }
-                      >
-                        Fav
-                      </Button>
+                        alt="Favorite"
+                        />
+                      <Image 
+                        src="https://i.imgur.com/Xek8q8Y.png" 
+                        style={{height: "40px"}}
+                        onClick={() => remove(_id)}
+                        alt="Delete"
+                      />
                     </div>
                   )}
                 </div>

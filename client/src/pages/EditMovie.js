@@ -129,7 +129,7 @@ export default function EditMovie() {
   }
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4" style={{height: "100%", minHeight: "calc(100vh - 97px)"}}>
       <h1 className="text-center" style={{color: "white"}}>Edit Movies or Series</h1>
       <Form onSubmit={submitForm}>
 
