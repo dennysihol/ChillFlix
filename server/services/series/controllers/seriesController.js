@@ -20,15 +20,15 @@ class SeriesController {
 
     static async findOne(req, res, next) {
         try {
-            await redis.del('tv-series')
             const id = req.params.id
             const cache = await redis.get("tv-series")
-            if(cache){
-                res.json(JSON.parse(cache));
-            } else {                
+            const seriesCache = JSON.parse(cache)
+            if(!seriesCache){
                 const series = await Series.findOne(id)
                 res.status(200).json(series)
-                await redis.set("tv-series", JSON.stringify(series))
+            } else {
+                const filteredCache = seriesCache.filter((series) => series._id ===id)[0]   
+                res.status(200).json(filteredCache)
             }
         } catch(err) {
             console.log(err);

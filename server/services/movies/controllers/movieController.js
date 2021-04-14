@@ -20,14 +20,15 @@ class MovieController {
 
     static async findOne(req, res, next) {
         try {
-            await redis.del('movies')
-            const id = req.params.id
+            const id = req.params.id;
             const cache = await redis.get("movies");
-            if(cache){
-                res.json(JSON.parse(cache));
+            const movieCache = JSON.parse(cache)
+            if(!movieCache){           
+                const movies = await Movie.findOne(id);
+                res.status(200).json(movies);
             } else {
-                const movies = await Movie.findOne(id)
-                res.status(200).json(movies)
+                const filteredCache = movieCache.filter((movie) => movie._id === id)[0]
+                res.status(200).json(filteredCache)
             }
         } catch(err) {
             console.log(err);
