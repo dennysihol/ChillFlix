@@ -44,16 +44,24 @@ export default function Home() {
   return (
     <div className="container" style={{paddingBottom: "20px"}}>
       <h1 className="text-left mt-4" style={{color: "white"}}>Movies List</h1>
-      <div className="d-flex flex-wrap container">
-        {data.getMovies.map((movie) => (
-          <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
-        ))}
+      <div className="container">
+        <div className="row">
+          {data.getMovies.map((movie) => (
+            <div className="col-4">
+              <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
+            </div>
+          ))}
+        </div>
       </div>
       <h1 className="text-left mt-4" style={{color: "white"}}>Series List</h1>
-      <div className="d-flex flex-wrap container">
-        {data.getSeries.map((series) => (
-          <ListCard key={series._id} film={series} type={"Series"} action={true} />
-        ))}
+      <div className="container">
+        <div className="row">
+          {data.getSeries.map((series) => (
+            <div className="col-4">
+              <ListCard key={series._id} film={series} type={"Series"} action={true} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

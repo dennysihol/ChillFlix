@@ -36,9 +36,13 @@ export default function Movies() {
     <div style={{paddingBottom: "20px", height: "100vh", overflow: "auto"}}>
       <h1 className="text-center mt-4" style={{color: "white"}}>Movies List</h1>
       <div className="d-flex flex-wrap container">
-        {data.getMovies.map((movie) => (
-          <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
-        ))}
+        <div className="row">
+          {data.getMovies.map((movie) => (
+            <div className="col-4">
+              <ListCard key={movie._id} film={movie} type={"Movie"} action={true} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

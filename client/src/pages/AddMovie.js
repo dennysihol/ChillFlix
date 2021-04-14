@@ -129,6 +129,14 @@ export default function AddMovie() {
         <h1 className="text-center" style={{color: "white"}}>Add Movies or Series</h1>
         <Form onSubmit={submitForm}>
             <Form.Group>
+            <Form.Label style={{color: "white"}}>Type</Form.Label>
+            <Form.Control as="select" value={type} onChange={typeHandle}>
+                <option>Movie</option>
+                <option>Series</option>
+            </Form.Control>
+            </Form.Group>
+
+            <Form.Group>
             <Form.Label style={{color: "white"}}>Title</Form.Label>
             <Form.Control
                 type="text"
@@ -148,14 +156,6 @@ export default function AddMovie() {
                 value={form.overview}
                 onChange={onChangeForm}
             />
-            </Form.Group>
-
-            <Form.Group>
-            <Form.Label style={{color: "white"}}>Type</Form.Label>
-            <Form.Control as="select" value={type} onChange={typeHandle}>
-                <option>Movie</option>
-                <option>Series</option>
-            </Form.Control>
             </Form.Group>
 
             <Form.Group>
@@ -179,6 +179,7 @@ export default function AddMovie() {
                 onChange={onChangeForm}
             />
             </Form.Group>
+            
             <Form.Group>
             <Form.Label style={{color: "white"}}>Tags</Form.Label>
             <br />

@@ -36,9 +36,13 @@ export default function Series() {
     <div style={{paddingBottom: "20px", height: "100vh", overflow: "auto"}}> 
       <h1 className="text-center mt-4" style={{color: "white"}}>Series List</h1>
       <div className="d-flex flex-wrap container">
-        {data.getSeries.map((series) => (
-          <ListCard key={series._id} film={series} type={"Series"} action={true} />
-        ))}
+        <div className="row">
+          {data.getSeries.map((series) => (
+            <div className="col-4">
+              <ListCard key={series._id} film={series} type={"Series"} action={true} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

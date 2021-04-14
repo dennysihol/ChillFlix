@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card, Button, Row, Col, Image } from "react-bootstrap";
 import { gql, useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import client, { GET_FAV_FILM } from "../config/graphql";
@@ -36,7 +36,7 @@ export default function ListCard(props) {
         variables: {
           id,
         },
-        refetchQueries: ["GetMovies"],
+        refetchQueries: ["GetAll"],
       });
       Swal.fire({
         icon: "success",
@@ -47,7 +47,7 @@ export default function ListCard(props) {
         variables: {
           id,
         },
-        refetchQueries: ["GetSeries"],
+        refetchQueries: ["GetAll"],
       });
       Swal.fire({
         icon: "success",
@@ -112,13 +112,13 @@ export default function ListCard(props) {
                     <h5>{title}</h5>
                   </div>
                   <div>
-                    <h6>"{overview}"</h6>
+                    <p>"{overview}"</p>
                   </div>
                   <div>
                     <h6>Tags: {tags.join(", ")}</h6>
                   </div>
                   <div>
-                    <h6>{popularity}%/100%</h6>
+                    <h6><Image src="https://image.flaticon.com/icons/png/128/3163/3163742.png" rounded style={{width: "40px"}} />&nbsp;{popularity}%</h6>
                   </div>
                   {action && (
                     <div className="d-flex justify-content-around">
